@@ -305,8 +305,8 @@ function App() {
                     </div>
 
                     {reportContent && (
-                      <div style={{ flex: '0 1 200px', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                        <Divider style={{ margin: '10px 0 0 0' }} />
+                      <div className="dialog-section">
+                        <Divider style={{ margin: '0 0 15px 0' }} />
                         <DialogArea
                           history={dialogHistory}
                           onSendMessage={handleSendMessage}

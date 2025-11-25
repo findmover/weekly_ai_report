@@ -2,6 +2,8 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .app-header {
@@ -11,6 +13,7 @@
   text-align: center;
   border-radius: 12px 12px 0 0;
   margin-bottom: 0;
+  flex-shrink: 0;
 }
 
 .app-header h1 {
@@ -26,13 +29,13 @@
 
 .app-content {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 1fr 1fr;
   gap: 0;
   background: white;
   border-radius: 0 0 12px 12px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  min-height: 700px;
-  max-height: 90vh;
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
 }
 
@@ -41,6 +44,9 @@
   padding: 30px;
   border-right: 1px solid #e0e0e0;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .right-panel {
@@ -48,7 +54,26 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  justify-content: flex-start;
+  min-height: 0;
+  flex: 1;
+}
+
+/* Tabs 容器固定高度分配 */
+:global(.ant-tabs) {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+:global(.ant-tabs-content-holder) {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+:global(.ant-tabs-tabpane) {
+  height: 100%;
+  overflow: hidden;
 }
 
 .tab-content {
@@ -57,11 +82,12 @@
   height: 100%;
   overflow: hidden;
   padding: 20px;
-  gap: 20px;
+  gap: 0;
 }
 
 .chat-tab {
   padding: 0;
+  gap: 0;
 }
 
 .panel-title {
@@ -72,6 +98,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
 
 .panel-title::before {
@@ -84,6 +111,7 @@
 
 .text-input-item {
   margin-bottom: 20px;
+  flex-shrink: 0;
 }
 
 .input-label {
@@ -121,12 +149,11 @@
   color: #999;
 }
 
+/* 结果区域：占据中间可变部分 */
 .result-area {
-  flex: 0 1 auto;
-  margin-bottom: 0;
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
-  min-height: 300px;
-  max-height: 60vh;
   display: flex;
   flex-direction: column;
 }
@@ -139,6 +166,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
 
 .result-title::before {
@@ -157,7 +185,8 @@
   font-size: 12px;
   color: #666;
   line-height: 1.6;
-  max-height: 250px;
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
 }
 
@@ -172,22 +201,36 @@
   margin: 0;
 }
 
+/* 对话区域：固定高度 */
+.dialog-section {
+  flex-shrink: 0;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #e0e0e0;
+  overflow: hidden;
+}
+
+/* 操作按钮：始终可见 */
 .action-buttons {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  padding-top: 10px;
+  padding: 15px 0 0 0;
   border-top: 1px solid #e0e0e0;
   flex-shrink: 0;
-  margin-top: 0;
-  min-height: 44px;
+  min-height: auto;
   align-items: center;
+  margin-top: auto;
 }
 
 .action-buttons button {
   flex: 1;
   min-width: 100px;
   height: 36px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Scrollbar */
@@ -232,5 +275,9 @@
 
   .action-buttons {
     flex-direction: column;
+  }
+
+  .action-buttons button {
+    width: 100%;
   }
 }
