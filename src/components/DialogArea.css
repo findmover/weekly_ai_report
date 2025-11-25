@@ -30,10 +30,13 @@
 }
 
 .dialog-message.user {
-  text-align: right;
+  text-align: left;
   color: white;
   background: #667eea;
-  margin-left: 20%;
+  margin-left: auto;
+  margin-right: 0;
+  width: fit-content;
+  margin-top: 10px;
 }
 
 .dialog-message.ai {
@@ -41,7 +44,10 @@
   color: #555;
   background: white;
   border: 1px solid #e0e0e0;
-  margin-right: 20%;
+  margin-left: 0;
+  margin-right: auto;
+  width: fit-content;
+  margin-bottom: 10px;
 }
 
 .dialog-input-group {
