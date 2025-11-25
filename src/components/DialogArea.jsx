@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
-import { Input, Button, Empty } from 'antd';
+import React, { useState, useEffect, useRef } from 'react';
+import { Input, Button } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
 import './DialogArea.css';
 
 function DialogArea({ history, onSendMessage }) {
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(false);
+  const historyEndRef = useRef(null);
+
+  // 自动滚动到最新消息
+  useEffect(() => {
+    historyEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [history]);
 
   const handleSend = async () => {
     if (!inputValue.trim()) return;
@@ -28,22 +34,25 @@ function DialogArea({ history, onSendMessage }) {
 
   return (
     <div className="dialog-area">
-      <div className="dialog-title">💬 连续对话</div>
+      <div className="dialog-title">💬 继续优化</div>
 
       <div className="dialog-history">
         {history.length === 0 ? (
-          <div style={{ color: '#999', fontSize: '12px' }}>
-            AI周报已生成，您可以继续优化内容...
+          <div style={{ color: '#999', fontSize: '12px', margin: 'auto' }}>
+            周报已生成，您可以继续优化...
           </div>
         ) : (
-          history.map((msg, index) => (
-            <div
-              key={index}
-              className={`dialog-message ${msg.role === 'user' ? 'user' : 'ai'}`}
-            >
-              {msg.content}
-            </div>
-          ))
+          <>
+            {history.map((msg, index) => (
+              <div
+                key={index}
+                className={`dialog-message ${msg.role === 'user' ? 'user' : 'ai'}`}
+              >
+                {msg.content}
+              </div>
+            ))}
+            <div ref={historyEndRef} />
+          </>
         )}
       </div>
 
@@ -62,7 +71,7 @@ function DialogArea({ history, onSendMessage }) {
           onClick={handleSend}
           loading={loading}
           block
-          style={{ marginTop: '10px' }}
+          style={{ marginTop: '0px' }}
         >
           发送
         </Button>
